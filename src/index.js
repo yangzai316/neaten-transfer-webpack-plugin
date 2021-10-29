@@ -3,7 +3,7 @@ const { statSync } = require('fs');
 const { src, dest } = require('gulp');
 const rename = require("gulp-rename");
 const chalk = require('chalk');
-
+const rimraf = require('rimraf');
 
 
 class NeatenTransferWebpackPlugin {
@@ -14,47 +14,61 @@ class NeatenTransferWebpackPlugin {
 
     apply(compiler) {
         compiler.hooks.done.tap('NeatenTransferWebpackPlugin', () => {
+            const { to } = this.options;
+            // 不做覆盖操作
+            if (!to.cover) return pipe(this.options);
+            // 移除目标文件夹，后面重新添加
+            rimraf(`${to.path}${to.name}`, (err) => {
+                if (err) return console.log(chalk.red(error));
+                console.log(chalk.green(`> neaten-transfer-webpack-plugin: Remove finder ${to.name} success ...`));
+                pipe(this.options);
+            });
 
-            const { from, to } = this.options;
-            const dirs = [];
-            const files = [];
-            /**
-             * 校验文件信息，并文件类型
-             */
-            for (let i = 0; i < from.length; i++) {
-                try {
-                    const data = statSync(`${from[i]?.path}${from[i]?.name}`);
-                    data.isDirectory() ? dirs.push(from[i]) : files.push(from[i])
-                } catch (error) {
-                    return console.log(chalk.red(error));
-                }
-            };
-            /**
-             * 批量复制文件
-             */
-            for (let i = 0; i < files.length; i++) {
-                try {
-                    pipeFile(files[i], to);
-                } catch (error) {
-                    return console.log(chalk.red(error));
-                }
-            };
-            /**
-             * 批量复制文件夹
-             */
-            for (let i = 0; i < dirs.length; i++) {
-                try {
-                    pipeDir(dirs[i], to);
-                } catch (error) {
-                    return console.log(chalk.red(error));
-                }
-            };
-
-            console.log(chalk.green('> neaten-transfer-webpack-plugin: Copy success ...'));
         })
     }
 
 };
+
+/**
+ * 批量处理文件or文件夹复制
+ */
+const pipe = ({ from, to }) => {
+    const dirs = [];
+    const files = [];
+    /**
+     * 校验文件信息，并文件类型
+     */
+    for (let i = 0; i < from.length; i++) {
+        try {
+            const data = statSync(`${from[i]?.path}${from[i]?.name}`);
+            data.isDirectory() ? dirs.push(from[i]) : files.push(from[i])
+        } catch (error) {
+            return console.log(chalk.red(error));
+        }
+    };
+    /**
+     * 批量复制文件
+     */
+    for (let i = 0; i < files.length; i++) {
+        try {
+            pipeFile(files[i], to);
+        } catch (error) {
+            return console.log(chalk.red(error));
+        }
+    };
+    /**
+     * 批量复制文件夹
+     */
+    for (let i = 0; i < dirs.length; i++) {
+        try {
+            pipeDir(dirs[i], to);
+        } catch (error) {
+            return console.log(chalk.red(error));
+        }
+    };
+
+    console.log(chalk.green(`> neaten-transfer-webpack-plugin: Transfer files into finder ${to.rename || to.name} success ...`));
+}
 /**
  * 复制文件夹
  */
