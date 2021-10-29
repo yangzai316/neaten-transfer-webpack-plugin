@@ -14,12 +14,17 @@ class NeatenTransferWebpackPlugin {
 
     apply(compiler) {
         compiler.hooks.done.tap('NeatenTransferWebpackPlugin', () => {
-            const { to } = this.options;
+            // 对 to 进行参数校验
+            if (!this.options?.to || !this.options?.to?.name || !this.options?.to?.path) {
+                return console.log(chalk.red(`> neaten-transfer-webpack-plugin is ERROR：to | to.name | to.path is required`));
+            }
+            const to = { cover: true, ...this.options.to };
             // 不做覆盖操作
             if (!to.cover) return pipe(this.options);
             // 移除目标文件夹，后面重新添加
             rimraf(`${to.path}${to.name}`, (err) => {
-                if (err) return console.log(chalk.red(error));
+                if (err) return console.log(chalk.red(`> neaten-transfer-webpack-plugin is ERROR： Remove finder ${err}`));
+
                 console.log(chalk.green(`> neaten-transfer-webpack-plugin: Remove finder ${to.name} success ...`));
                 pipe(this.options);
             });
@@ -39,6 +44,9 @@ const pipe = ({ from, to }) => {
      * 校验文件信息，并文件类型
      */
     for (let i = 0; i < from.length; i++) {
+        if (!from[i] || !from[i]?.name || !from[i]?.path) {
+            return console.log(chalk.red(`> neaten-transfer-webpack-plugin is ERROR：from | from.name | from.path is required`));
+        }
         try {
             const data = statSync(`${from[i]?.path}${from[i]?.name}`);
             data.isDirectory() ? dirs.push(from[i]) : files.push(from[i])

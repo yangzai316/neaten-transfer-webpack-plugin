@@ -22,8 +22,7 @@ module.exports = {
         }],
         to: {
             path: './',
-            name: 'new',
-            cover: true
+            name: 'new'
         }
     })]
 };
