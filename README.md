@@ -25,7 +25,7 @@ npm install neaten-transfer-webpack-plugin --save-dev
 
 ```javascript
 
-const NeatenTransferWebpackPlugin = require('./src/index')
+const NeatenTransferWebpackPlugin = require('neaten-transfer-webpack-plugin')
 
 module.exports = {
     //...

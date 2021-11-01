@@ -1,14 +1,12 @@
 {
   "name": "neaten-transfer-webpack-plugin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Put together to folder and Transfer to new document location",
   "main": "./src/index.js",
   "dependencies": {
     "gulp": "^4.0.2",
     "webpack": "^5.60.0",
-    "webpack-cli": "^4.9.1"
-  },
-  "devDependencies": {
+    "webpack-cli": "^4.9.1",
     "chalk": "^4.1.2",
     "gulp-rename": "^2.0.0",
     "rimraf": "^3.0.2"
