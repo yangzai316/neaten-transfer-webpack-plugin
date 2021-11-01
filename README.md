@@ -68,7 +68,7 @@ module.exports = {
 
 [
     {
-        path: './',    // 文件所在位置
+        path: path.resolve(__dirname, './'),    // 文件所在位置
         name: 'dist',  // 文件名
         rename:'dist2' // 重命名后的新名字，不传则不重命名
     }
@@ -86,7 +86,7 @@ module.exports = {
 ```javascript
 
 {
-    path: './',    // 文件所在位置
+    path: path.resolve(__dirname, './'),    // 文件所在位置
     name: 'dist',  // 文件名
     cover: true    // true：相同的文件覆盖，不同的文件删除；false：相同的文件覆盖，不同的文件保留；默认为true
 }

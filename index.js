@@ -1,4 +1,2 @@
-const a = '123456';
-
-
+const a = 'test';
 export default a;
