@@ -1,6 +1,6 @@
 {
   "name": "neaten-transfer-webpack-plugin",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Put together to folder and Transfer to new document location",
   "main": "./src/index.js",
   "dependencies": {
@@ -19,8 +19,14 @@
     "type": "git",
     "url": "git+https://github.com/yangzaiwangzi/neaten-transfer-webpack-plugin.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "webpack",
+    "webpack-plugin",
+    "neaten",
+    "transfer",
+    "copy"
+  ],
+  "author": "cunyang",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/yangzaiwangzi/neaten-transfer-webpack-plugin/issues"
