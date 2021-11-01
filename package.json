@@ -14,7 +14,8 @@
     "rimraf": "^3.0.2"
   },
   "scripts": {
-    "dev": "webpack"
+    "dev": "webpack",
+    "test": "webpack --config ./test/webpack.plugin.js"
   },
   "repository": {
     "type": "git",

@@ -1,10 +1,13 @@
-<div >
+<div>
   <a href="https://github.com/webpack/webpack">
     <img width="200" height="200"
       src="https://webpack.js.org/assets/icon-square-big.svg">
   </a>
 </div>
+</br>
 
+[![NPM version](https://img.shields.io/npm/v/neaten-transfer-webpack-plugin.svg)](https://www.npmjs.com/package/neaten-transfer-webpack-plugin)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/yangzaiwangzi/neaten-transfer-webpack-plugin/blob/main/LICENSE) 
 # neaten-transfer-webpack-plugin
 用于将多个不在同级目录中文件或多个不在同级目录中文件夹复制到另一个文件中的webpack plugin，会在webpack打包编译结束之后执行。
 
@@ -28,14 +31,14 @@ module.exports = {
     //...
     plugins: [new NeatenTransferWebpackPlugin({
         from: [{
-            path: './',
+            path: path.resolve(__dirname, './'),
             name: 'dist'
         }, {
-            path: './',
+            path: path.resolve(__dirname, './'),
             name: 'package.json'
         }],
         to: {
-            path: './',
+            path: path.resolve(__dirname, './'),
             name: 'new',
             cover: true
         }
@@ -88,4 +91,42 @@ module.exports = {
     cover: true    // true：相同的文件覆盖，不同的文件删除；false：相同的文件覆盖，不同的文件保留；默认为true
 }
 
+```
+
+### DOME
+```
+# 原文件位置如下，可复制为dist 和 config.js 到 new 文件夹下
+- root
+    - dist
+        - a.js
+        - b.js
+    - config.js
+
+# 复制后的文件位置：
+- root
+    - dist
+        - a.js
+        - b.js
+    - config.js
+    - new
+        - dist
+            - a.js
+            - b.js
+        - config.js
+
+# 插件配置如下：
+plugins: [new NeatenTransferWebpackPlugin({
+    from: [{
+        path: path.resolve(__dirname, './'),
+        name: 'dist'
+    }, {
+        path: path.resolve(__dirname, './'),
+        name: 'package.json'
+    }],
+    to: {
+        path: path.resolve(__dirname, './'),
+        name: 'new',
+        cover: true
+    }
+})];
 ```

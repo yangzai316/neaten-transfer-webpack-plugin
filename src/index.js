@@ -1,5 +1,6 @@
 
 const { statSync } = require('fs');
+const path = require('path');
 const { src, dest } = require('gulp');
 const rename = require("gulp-rename");
 const chalk = require('chalk');
@@ -26,6 +27,7 @@ class NeatenTransferWebpackPlugin {
                 if (err) return console.log(chalk.red(`> neaten-transfer-webpack-plugin is ERROR： Remove finder ${err}`));
 
                 console.log(chalk.green(`> neaten-transfer-webpack-plugin: Remove finder ${to.name} success ...`));
+
                 pipe(this.options);
             });
 
@@ -46,9 +48,10 @@ const pipe = ({ from, to }) => {
     for (let i = 0; i < from.length; i++) {
         if (!from[i] || !from[i]?.name || !from[i]?.path) {
             return console.log(chalk.red(`> neaten-transfer-webpack-plugin is ERROR：from | from.name | from.path is required`));
-        }
+        };
+
         try {
-            const data = statSync(`${from[i]?.path}${from[i]?.name}`);
+            const data = statSync(`${from[i]?.path}/${from[i]?.name}`);
             data.isDirectory() ? dirs.push(from[i]) : files.push(from[i])
         } catch (error) {
             return console.log(chalk.red(error));
@@ -81,8 +84,11 @@ const pipe = ({ from, to }) => {
  * 复制文件夹
  */
 const pipeDir = (_src, _dest) => {
-    src(`${_src.path}${_src.name}/**/*`)
-        .pipe(dest(`${_dest.path}${_dest.name}/${_src.rename || _src.name}`));
+    const _from = `${_src.path}/${_src.name}/**/*`;
+    const _to = `${_dest.path}/${_dest.name}/${_src.rename || _src.name}`;
+
+    src(_from)
+        .pipe(dest(_to));
 }
 
 
@@ -90,9 +96,12 @@ const pipeDir = (_src, _dest) => {
  * 复制文件
  */
 const pipeFile = (_src, _dest) => {
-    src(`${_src.path}${_src.name}`)
+    const _from = `${_src.path}/${_src.name}`;
+    const _to = `${_dest.path}/${_dest.name}`;
+
+    src(_from, { allowEmpty: true })
         .pipe(rename(`${_src.rename || _src.name}`))
-        .pipe(dest(`${_dest.path}${_dest.name}`));
+        .pipe(dest(_to));
 };
 
 module.exports = NeatenTransferWebpackPlugin;
