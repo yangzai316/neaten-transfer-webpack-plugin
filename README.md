@@ -64,6 +64,7 @@ module.exports = {
 |  name  | String  |   yes    | 文件名           |
 | rename | String  |    no    | 重命名后的新名字 |
 
+
 ```javascript
 
 [
@@ -82,6 +83,7 @@ module.exports = {
 | path  | String  |   yes    | 文件夹所在位置                  |
 | name  | String  |   yes    | 文件夹名                        |
 | cover | Boolean |    no    | 是否覆盖该文件夹下所有的文件 ， |
+
 
 ```javascript
 

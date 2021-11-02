@@ -1,6 +1,6 @@
 {
   "name": "neaten-transfer-webpack-plugin",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Put together to folder and Transfer to new document location",
   "main": "./src/index.js",
   "dependencies": {
