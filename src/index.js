@@ -23,7 +23,7 @@ class NeatenTransferWebpackPlugin {
             // 不做覆盖操作
             if (!to.cover) return pipe(this.options);
             // 移除目标文件夹，后面重新添加
-            rimraf(`${to.path}${to.name}`, (err) => {
+            rimraf(`${to.path}/${to.name}`, (err) => {
                 if (err) return console.log(chalk.red(`> neaten-transfer-webpack-plugin is ERROR： Remove finder ${err}`));
 
                 console.log(chalk.green(`> neaten-transfer-webpack-plugin: Remove finder ${to.name} success ...`));
